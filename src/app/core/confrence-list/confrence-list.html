@@ -1,0 +1,65 @@
+
+<h1>Liste des conférences</h1>
+
+<div class="container">
+
+  <!-- Recherche -->
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Rechercher une conférence..."
+    [(ngModel)]="searchItem"
+  >
+
+  <!-- Liste des conférences -->
+  @for (conf of filter(); track conf.id) {
+
+    @if (conf.nbPlaces > 0) {
+
+      <!-- Appel du composant Card -->
+      <app-card
+        [conf]="conf"
+        (favorite)="addFavorite($event)"
+        (like)="liker($event)"
+      />
+
+    }
+
+  } @empty {
+    <h2>Aucune conférence trouvée</h2>
+  }
+
+</div>
+
+<hr>
+
+<!-- Liste des favoris -->
+<h1>Mes favoris</h1>
+
+<div class="container">
+
+  @for (conf of favoritelist(); track conf.id) {
+
+    <div class="card mb-3" style="width: 18rem;">
+
+      <div class="card-body">
+
+        <h5 class="card-title">
+          {{ conf.titre }}
+        </h5>
+
+        <p class="card-text">
+          {{ conf.category }}
+        </p>
+
+        <p>Likes : {{ conf.nbLikes }}</p>
+
+      </div>
+
+    </div>
+
+  } @empty {
+    <h2>Aucun favori pour le moment</h2>
+  }
+
+</div>
